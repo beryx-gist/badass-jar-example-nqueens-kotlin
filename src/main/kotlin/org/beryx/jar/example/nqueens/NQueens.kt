@@ -21,16 +21,11 @@ import java.util.function.Predicate
 import java.util.stream.Collectors
 
 data class Position(val line: Int, val column: Int) {
-    override fun toString(): String {
-        return "(${line + 1}, ${column + 1})"
-    }
+    override fun toString() = "(${line + 1}, ${column + 1})"
 }
 
-class Solution {
-    val positions = mutableListOf<Position>()
-    override fun toString(): String {
-        return positions.stream().map(Position::toString).collect(Collectors.joining(", "))
-    }
+data class Solution(val positions: MutableList<Position> = mutableListOf()) {
+    override fun toString() = positions.map(Position::toString).joinToString(", ")
 }
 
 class NQueens {
@@ -54,7 +49,7 @@ class NQueens {
                             positions.add(Position(i, perm[i]))
                         }
                     }}
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList())
         }
     }
 }

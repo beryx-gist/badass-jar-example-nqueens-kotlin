@@ -32,9 +32,9 @@ class NQueensTest {
 
     @Test
     fun two_solutions_for_size_4() {
-        val solutions = NQueens.solve(4);
-        assertEquals(2, solutions.size);
-        assertEquals("(1, 2), (2, 4), (3, 1), (4, 3)", solutions.get(0).toString());
-        assertEquals("(1, 3), (2, 1), (3, 4), (4, 2)", solutions.get(1).toString());
+        val solutions = NQueens.solve(4)
+        assertEquals(2, solutions.size)
+        assertEquals("(1, 2), (2, 4), (3, 1), (4, 3)", "${solutions[0]}")
+        assertEquals("(1, 3), (2, 1), (3, 4), (4, 2)", "${solutions[1]}")
     }
 }
