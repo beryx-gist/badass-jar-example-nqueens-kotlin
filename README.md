@@ -38,12 +38,12 @@ The above gradle command will still succeed, although the new `module-info.java`
 
 To check the validity of `module-info.java` execute:
 ```
-./gradlew -PjavaCompatibility=9 build
+./gradlew -PjavaCompatibility=11 build
 ```
 
 Note that [Travis](https://github.com/beryx-gist/badass-jar-example-nqueens-kotlin/blob/master/travis-build.sh) is configured
 to run gradle both with and without the `javaCompatibility` project property: 
 ```
-./gradlew -PjavaCompatibility=9 --no-daemon -i -s build
+./gradlew -PjavaCompatibility=11 --no-daemon -i -s build
 ./gradlew --no-daemon -i -s build
 ```
