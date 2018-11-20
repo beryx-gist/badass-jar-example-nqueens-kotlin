@@ -16,9 +16,7 @@ plugins {
     id("org.beryx.jar") version "1.0.0"
 }
 ...
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 ...
 ```
 
