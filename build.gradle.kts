@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.10"
-    id("org.beryx.jar") version "1.0.0"
+    id("org.beryx.jar") version "1.1.0"
 }
 
 repositories {
@@ -23,8 +23,6 @@ val version: String by project
 val compileKotlin: KotlinCompile by tasks
 val compileJava: JavaCompile by tasks
 compileJava.destinationDir = compileKotlin.destinationDir
-
-javaModule.setAllowModuleNamingViolations(false)
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform { }
