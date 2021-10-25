@@ -1,14 +1,12 @@
-import org.jetbrains.kotlin.daemon.common.DaemonOptions
-import org.jetbrains.kotlin.daemon.common.configureDaemonOptions
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.10"
-    id("org.beryx.jar") version "1.1.0"
+    kotlin("jvm") version "1.5.31"
+    id("org.beryx.jar") version "2.0.0-rc-1"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -26,16 +24,16 @@ compileJava.destinationDir = compileKotlin.destinationDir
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform { }
-    onlyIf { java.sourceCompatibility <= JavaVersion.VERSION_1_8 }
 }
 
 dependencies {
-    compile(kotlin("reflect"))
-    compile(kotlin("stdlib"))
-    compile("org.beryx:streamplify:1.1.1")
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.3.1")
-    testCompile("org.junit.jupiter:junit-jupiter-params:5.3.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
+    implementation(kotlin("reflect"))
+    implementation(kotlin("stdlib"))
+    implementation("org.beryx:streamplify:1.1.1")
+    testImplementation(platform("org.junit:junit-bom:5.8.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
 }
 
 tasks.withType<Jar> {
@@ -44,5 +42,13 @@ tasks.withType<Jar> {
                 "Implementation-Title" to project.name,
                 "Implementation-Version" to version
         ))
+    }
+}
+
+tasks {
+    jar {
+        configure<org.beryx.jar.JarModularityExtension> {
+            multiRelease.set(true)
+        }
     }
 }
