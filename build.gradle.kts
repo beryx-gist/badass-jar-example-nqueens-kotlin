@@ -1,18 +1,19 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.JavaVersion
 
 plugins {
     kotlin("jvm") version "1.5.31"
-    id("org.beryx.jar") version "2.0.0-rc-1"
+    id("org.beryx.jar") version "2.0.0-rc-4"
 }
 
 repositories {
     mavenCentral()
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+val jvmVersion = "${findProperty("javaCompatibility") ?: "11"}".toInt()
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "${JavaVersion.toVersion(jvmVersion)}"
 }
 group = "org.beryx.jar.example"
 
@@ -20,7 +21,7 @@ val version: String by project
 
 val compileKotlin: KotlinCompile by tasks
 val compileJava: JavaCompile by tasks
-compileJava.destinationDir = compileKotlin.destinationDir
+compileJava.destinationDirectory.set(compileKotlin.destinationDirectory)
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform { }
@@ -40,15 +41,12 @@ tasks.withType<Jar> {
     manifest {
         attributes(mapOf(
                 "Implementation-Title" to project.name,
-                "Implementation-Version" to version
+                "Implementation-Version" to project.version
         ))
     }
 }
 
-tasks {
-    jar {
-        configure<org.beryx.jar.JarModularityExtension> {
-            multiRelease.set(true)
-        }
-    }
-}
+moduleConfig.version.set("$version")
+moduleConfig.neverCompileModuleInfo.set(true)
+
+compileJava.options.release.set (jvmVersion)
